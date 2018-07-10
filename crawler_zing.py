@@ -149,7 +149,6 @@ for i in range(int(SBD_BAT_DAU), int(SBD_KET_THUC) + 1):
 		writeResult(f, student)
 	if (DEBUG):
 		print("Done %s in %fs" % (SBD,time.time() - start_time))
-print("Done ALL in %fs" % (time.time() - loop_time))
+print("Done ALL from %s to %s of %s:%s in %fs" % (SBD_BAT_DAU, SBD_KET_THUC, MA_TINH, c2p[MA_TINH], time.time() - loop_time))
 
 f.close()
-driver.quit()
