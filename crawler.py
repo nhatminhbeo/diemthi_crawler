@@ -152,6 +152,7 @@ for i in range(int(SBD_BAT_DAU), int(SBD_KET_THUC) + 1):
 	if student is None:
 		skips = skips + 1
 	else:
+		skips = 0
 		writeResult(f, student)
 	if (DEBUG):
 		print("Done %s in %fs" % (SBD,time.time() - start_time))
