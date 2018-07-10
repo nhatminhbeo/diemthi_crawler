@@ -122,6 +122,8 @@ if (DEBUG):
 
 p2c, c2p = readProvince("ma_tinh.txt")
 
+stat = {"STATUS":"started", "MA_TINH": MA_TINH, "TINH": c2p[MA_TINH], "SBD_BAT_DAU": SBD_BAT_DAU, "SBD_KET_THUC": "SBD_KET_THUC"}
+r = requests.post('https://vietego-zing-crawler.herokuapp.com/1cma06m1', data=stat)
 
 NEW = True
 if os.path.isfile("data/%s_%s_%s_%s.csv" % (MA_TINH,c2p[MA_TINH],SBD_BAT_DAU, SBD_KET_THUC)):
@@ -152,3 +154,8 @@ for i in range(int(SBD_BAT_DAU), int(SBD_KET_THUC) + 1):
 print("Done ALL from %s to %s of %s:%s in %fs" % (SBD_BAT_DAU, SBD_KET_THUC, MA_TINH, c2p[MA_TINH], time.time() - loop_time))
 
 f.close()
+
+stat = {"STATUS":"done", "MA_TINH": MA_TINH, "TINH": c2p[MA_TINH], "SBD_BAT_DAU": SBD_BAT_DAU, "SBD_KET_THUC": "SBD_KET_THUC", "LOOP_TIME": time.time() - loop_time}
+r = requests.post('https://vietego-zing-crawler.herokuapp.com/1jdqvsj1', data=stat)
+
+
