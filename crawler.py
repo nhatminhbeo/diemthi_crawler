@@ -118,7 +118,7 @@ HEADER = HEADER10 if (TYPE == "10") else HEADER12
 if (DEBUG):
 	print("Starting script ...")
 options = webdriver.ChromeOptions()
-options.add_argument('headless')
+#options.add_argument('headless')
 driver = webdriver.Chrome(chrome_options=options)
 if (DEBUG):
 	print("Loading Page ...")
@@ -141,7 +141,7 @@ if (DEBUG):
 skips = 0
 loop_time = time.time()
 for i in range(int(SBD_BAT_DAU), int(SBD_KET_THUC) + 1):
-	SBD = "%s%04d" % (MA_TINH,i)
+	SBD = "%s%06d" % (MA_TINH,i)
 	if (skips > MAX_SKIP):
 		print("MAX_SKIP %d reached" % MAX_SKIP)
 		break
