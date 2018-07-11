@@ -118,7 +118,7 @@ HEADER = HEADER10 if (TYPE == "10") else HEADER12
 if (DEBUG):
 	print("Starting script ...")
 options = webdriver.ChromeOptions()
-#options.add_argument('headless')
+options.add_argument('headless')
 driver = webdriver.Chrome(chrome_options=options)
 if (DEBUG):
 	print("Loading Page ...")
