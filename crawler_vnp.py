@@ -28,37 +28,17 @@ def dummywait(time):
 	finally: 
 		dummy = 0
 
-def getStudent(url):
+def getStudent(url,sbd):
 	student = []
-	page = requests.get(url, headers={'User-Agent':'test'})
-	soup = BeautifulSoup(page.content, 'lxml')      
+	r = requests.get(url + sbd)
+	res = r.json()
+	if (res["message"] == "success"):
+		student.append(sbd)
+		student.append(res["result"].encode('utf-8'))
+		return student
+	else:
+		return None
 
-	print (page.text)  
-	#try:
-	soup = soup.find("section", {"id": "result-wrapper"})
-	location = soup.find("p", {"class": "location"})
-	location = location.find("a")
-	location = location.text
-	student.append(location.encode('utf-8'))
-
-
-	id = soup.find("span", {"class": "id-number"})
-	student.append(id.text.encode('utf-8'))
-
-
-	grade_string = ""
-	grade = soup.find("table", {"id": "result-single"})
-	grade = grade.find("tbody")
-	grades = grade.findAll("tr")
-
-	for gr in grades:
-		cols = gr.findAll("td")
-		grade_string = grade_string + cols[1].text.encode('utf-8') + ":"
-		grade_string = grade_string + cols[2].text.encode('utf-8') + "\t"
-	student.append(grade_string)
-	return student
-	#except :
-	#	return None
 
 def readProvince(fname):
 	p2c = {}
@@ -104,10 +84,8 @@ MA_TINH = sys.argv[2]
 SBD_BAT_DAU = sys.argv[3]
 SBD_KET_THUC = sys.argv[4]
 DEBUG = True if (sys.argv[5] == "T") else False
-URL10 = "https://thanhnien.vn/giao-duc/tuyen-sinh/2018/tra-cuu-diem-thi-lop-10.html"
-URL12 = "https://thanhnien.vn/giao-duc/tuyen-sinh/2018/tra-cuu-diem-thi-thpt-quoc-gia.html"
-HEADER = "Tinh,SBD,Diem\n"
-URL = "https://news.zing.vn/tra-cuu-diem-thpt-2018.html?q=%s&location=0"
+HEADER = "SBD,Diem\n"
+URL = "https://diemthi.vietnamplus.vn/Home/Search?id="
 
 
 #####################################################################################
@@ -144,7 +122,7 @@ for i in range(int(SBD_BAT_DAU), int(SBD_KET_THUC) + 1):
 		print("MAX_SKIP %d reached" % MAX_SKIP)
 		break
 	start_time = time.time()
-	student = getStudent(URL % SBD)
+	student = getStudent(URL,SBD)
 	if(DEBUG):
 		print(student)
 	if student is None:
